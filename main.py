@@ -1,4 +1,4 @@
-class Interpreter:
+class valuesetter:
     def __init__(self):
         self.variables = {}
 
