@@ -1,4 +1,4 @@
-class valuesetter:
+class ValueSetter:
     def __init__(self):
         self.variables = {}
 
