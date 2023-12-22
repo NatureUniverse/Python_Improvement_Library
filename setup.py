@@ -9,5 +9,4 @@ setup(
   author_email='pinokio082722@gmail.com',
   license='MIT',
   packages=find_packages(),
-  #install_requires=[],
 )
