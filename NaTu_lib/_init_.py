@@ -1,1 +1,1 @@
-from main import ValueSetter
+from NaTu import ValueSetter
