@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-  name='NaTu',
+  name='natu',
   version='0.0.1',
   description='Make python more eazy',
   url='https://github.com/NatureUniverse/Python_Improvement_Library',
