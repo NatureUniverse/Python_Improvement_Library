@@ -8,5 +8,8 @@ setup(
   author='NatureUniverse',
   author_email='pinokio082722@gmail.com',
   license='MIT',
-  packages=find_packages(),
+  packages=find_packages(where='src'),
+  package_dir={'': 'src'},
+  install_requires=[],
+  entry_points={},
 )
