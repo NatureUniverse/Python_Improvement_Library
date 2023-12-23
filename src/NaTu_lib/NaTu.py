@@ -1,4 +1,4 @@
-class ValueSetter:
+class _SimpleInterpreter:
     def __init__(self):
         self.variables = {}
 
@@ -12,8 +12,8 @@ class ValueSetter:
         if tokens:
             if tokens[0] == 'print' and len(tokens) >= 2:
                 self.print_value(tokens[1])
-            elif tokens[0] == 'dec' and len(tokens) >= 4:  #모든 data type -> dec설정
-                self.set_variable(tokens[1], tokens[3])
+            elif tokens[0] == 'dec' and len(tokens) >= 4:
+                self.set_variable(tokens[1], ' '.join(tokens[3:]))
             elif len(tokens) >= 4 and tokens[1] == '=':
                 result_var = tokens[0]
                 expression = ' '.join(tokens[2:])
@@ -27,30 +27,48 @@ class ValueSetter:
 
     def set_variable(self, variable_name, value):
         try:
-            self.variables[variable_name] = int(value)  # 정수로 변환 시도
+            # 사용자가 dec 키워드를 사용하면 자동으로 데이터 타입을 인식하여 설정
+            self.variables[variable_name] = self.auto_detect_data_type(value)
+        except ValueError as e:
+            print(f"Error setting variable '{variable_name}': {str(e)}")
+
+    def auto_detect_data_type(self, value):
+        try:
+            return int(value)
         except ValueError:
             try:
-                self.variables[variable_name] = float(value)  # 실수로 변환 시도
+                return float(value)
             except ValueError:
                 try:
-                    self.variables[variable_name] = complex(value)  # 복소수로 변환 시도
+                    return complex(value)
                 except ValueError:
                     try:
-                        self.variables[variable_name] = str(value)  # 문자열(유니코드)로 변환 시도
+                        return str(value)
                     except ValueError:
                         try:
-                            self.variables[variable_name] = bytes(value)  # 문자열(0~255범위의 문자)로 변환 시도
+                            return bytes(value, encoding='utf-8')
                         except ValueError:
                             try:
-                                self.variables[variable_name] = list(value)  # 자료로 변환 시도(이하 4개)
+                                return list(value)
                             except ValueError:
                                 try:
-                                    self.variables[variable_name] = tuple(value)
+                                    return tuple(value)
                                 except ValueError:
                                     try:
-                                        self.variables[variable_name] = dict(value)
+                                        return dict(value)
                                     except ValueError:
                                         try:
-                                            self.variables[variable_name] = set(value)
+                                            return set(value)
                                         except ValueError:
-                                            self.variables[variable_name] = bool(value)  # 참 거짓 변환 시도
+                                            return bool(value)
+
+# Singleton pattern을 사용하여 한 번만 인스턴스 생성
+natu_instance = _SimpleInterpreter()
+
+# dec 키워드를 사용하여 변수를 설정하는 함수
+def dec(variable_name, value):
+    natu_instance.set_variable(variable_name, value)
+
+# print 키워드를 사용하여 변수를 출력하는 함수
+def print_var(variable_name):
+    natu_instance.print_value(variable_name)
