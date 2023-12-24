@@ -10,7 +10,7 @@ class _SimpleInterpreter:
     def interpret_line(self, line):
         tokens = line.split()
         if tokens:
-            if tokens[0] == 'print' and len(tokens) >= 2:
+            if tokens[0] == 'prints' and len(tokens) >= 2:
                 self.print_value(tokens[1])
             elif tokens[0] == 'dec' and len(tokens) >= 4:
                 self.set_variable(tokens[1], ' '.join(tokens[3:]))
@@ -70,5 +70,5 @@ def dec(variable_name, value):
     natu_instance.set_variable(variable_name, value)
 
 # print 키워드를 사용하여 변수를 출력하는 함수
-def print_var(variable_name):
+def prints(variable_name):
     natu_instance.print_value(variable_name)
