@@ -1,1 +1,1 @@
-from src.NaTu_lib.natu import _SimpleInterpreter, dec, prints
+from .natu import _SimpleInterpreter, dec, prints
